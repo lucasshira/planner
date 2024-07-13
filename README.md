@@ -18,7 +18,7 @@ Plann.er is an app designed to help organize and plan trips, allowing users to c
 
 ## Getting Started
 
-To get started with Pass In Web, follow these steps:
+To get started with Plann.er, follow these steps:
 
 1. Clone the repository:
 
