@@ -5,17 +5,18 @@ import { z } from 'zod';
 import { dayjs } from "../lib/dayjs";
 import { getMailClient } from "../lib/mail";
 import { prisma } from "../lib/prisma";
+import { ClientError } from "../errors/client-error";
+import { env } from "../env";
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post('/trips', {
     schema: {
       body: z.object({
-        destination: z.string().min(4),
-        // converte o tipo do campo que esta vindo para o tipo Date
+        destination: z.string({ required_error: 'Destination is required.' }).min(4),
+        // coerce = converte o tipo do campo que esta vindo para o tipo Date
         starts_at: z.coerce.date(),
         ends_at: z.coerce.date(),
         owner_name: z.string(),
-        // passando .email() o zod vai validar o email automaticamente
         owner_email: z.string().email(),
         emails_to_invite: z.array(z.string().email()),
       })
@@ -24,11 +25,11 @@ export async function createTrip(app: FastifyInstance) {
     const { destination, starts_at, ends_at, owner_name, owner_email, emails_to_invite } = request.body;
 
     if (dayjs(starts_at).isBefore(new Date())) {
-      throw new Error('Invalid trip start date.');
+      throw new ClientError('Invalid trip start date.');
     }
 
     if (dayjs(ends_at).isBefore(starts_at)) {
-      throw new Error('Invalid trip end date.');
+      throw new ClientError('Invalid trip end date.');
     }
 
     // como trip e participants se relacionam, posso usar a criacao de uma trip juntamente com a criacao de um participant
@@ -61,7 +62,7 @@ export async function createTrip(app: FastifyInstance) {
     const formattedStartDate = dayjs(starts_at).format('LL');
     const formattedEndDate = dayjs(ends_at).format('LL');
 
-    const confirmationLink = `http://localhost:3333/trips/${trip.id}/confirm`;
+    const confirmationLink = `${env.API_BASE_URL}/trips/${trip.id}/confirm`;
     
     const mail = await getMailClient();
 

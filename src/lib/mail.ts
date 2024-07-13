@@ -10,7 +10,7 @@ export async function getMailClient() {
     secure: false,
     auth: {
       user: account.user,
-      password: account.pass
+      pass: account.pass
     }
   } as SMTPTransport.Options)
 
