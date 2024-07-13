@@ -13,6 +13,7 @@ Plann.er is an app designed to help organize and plan trips, allowing users to c
 - **Fastify**
 - **Prisma**
 - **SQL**
+- **Zod**
 
 
 ## Getting Started
