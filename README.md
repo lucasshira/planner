@@ -4,7 +4,7 @@ Plann.er is a project developed in TypeScript using Node.js with Fastify and Pri
 
 ## Overview
 
-Plann.er is an app designed to help organize and plan trips, allowing users to create, confirm trips and invite their friends easily.
+The app is designed to help organize and plan trips, allowing users to create, confirm trips and invite their friends easily.
 
 ## Technologies Used
 
@@ -14,7 +14,6 @@ Plann.er is an app designed to help organize and plan trips, allowing users to c
 - **Prisma**
 - **SQL**
 - **Zod**
-
 
 ## Getting Started
 
